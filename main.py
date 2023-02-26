@@ -2,6 +2,12 @@ import argparse
 import textwrap
 import sys
 import text as toSpeech
+import pyttsx3
+import sys
+import termios
+import tty
+import threading
+import speech_recognition as sr
 
 
 class Action:
