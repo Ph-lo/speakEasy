@@ -1,0 +1,7 @@
+speaksession
+./speaksession
+__pycache__
+./__pycache__
+./pyttsx3-voices.txt
+./test.py
+./test.txt
