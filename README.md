@@ -5,7 +5,7 @@ Text-to-speech CLI tool
 - [usage](#usage)
 - [arguments](#arguments)
 - [options](#options)
-- [voice list](#voice-list)
+- [voice list](#-voice-list)
 - [some examples](#examples)
 
 ## Usage
@@ -35,7 +35,7 @@ Available options:
 -v , --voice [VOICE] # voice selection. [see list](#list)
 ```
 
-## Voice list:
+## 🗣️ Voice list
 ```bash
 english     # gb, gb-female, gb-grandpa, gb-grandma,
             # us, us-female, us-grandpa, us-grandma,
