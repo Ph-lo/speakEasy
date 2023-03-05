@@ -2,7 +2,6 @@ import argparse
 import sys
 import text as toSpeech
 import sys
-import speech_recognition as sr
 
 
 def speech(args):
