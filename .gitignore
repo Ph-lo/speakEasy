@@ -8,3 +8,7 @@ __pycache__
 pyttsx3-voices.txt
 test.py
 test.txt
+./.gitignore
+.gitignore
+speech.py
+./speech.py

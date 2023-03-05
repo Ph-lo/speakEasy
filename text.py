@@ -4,37 +4,6 @@ import termios
 import tty
 import threading
 
-# SAVE VOICES TO FILE ####################################################
-# engine = pyttsx3.init()
-# voices = engine.getProperty('voices')
-# tmp = ""
-# for voice in voices:
-#     # engine.setProperty('voice', voice.id)
-#     # engine.say('Wesh alors, ça fonctionne là ? Ma petite couillasse.')
-#     tmp += voice.id + "\n"
-
-# with open("pyttsx3-voices.txt", "w") as file:
-#     file.write(tmp)
-# engine.runAndWait()
-##########################################################################
-
-# Set the voice and language
-# voice = engine.getProperty('voices')[9]
-
-# engine.setProperty('voice', "com.apple.eloquence.en-GB.Shelley")
-# engine.setProperty('voice', "com.apple.voice.compact.fr-FR.Thomas")
-# engine.setProperty('voice', "com.apple.voice.compact.ru-RU.Milena")
-
-# engine.setProperty('voice', voice.id)
-# engine.setProperty('rate', 160)
-# engine.setProperty('rate', 160)
-
-# Speak the text
-# text = "Even tho I'm just a robot, I really like your music bro"
-# text = "молодец мой братан, это круто"
-# engine.say(text)
-# engine.runAndWait()
-
 voices = {
     "fr": "com.apple.voice.compact.fr-FR.Thomas",
     "fr-female": "com.apple.eloquence.fr-FR.Flo",
@@ -66,35 +35,6 @@ voices = {
     "whisper": "com.apple.speech.synthesis.voice.Whisper"
 }
 
-# isBusy = bool to check if engine is playing
-
-
-# def textToSpeech(text: str, is_string: bool, voice: str, speed: int, show_text: bool):
-#     engine = pyttsx3.init()
-#     engine.setProperty('voice', voices[voice])
-#     engine.setProperty('rate', speed)
-#     # print(speed)
-#     if text:
-#         if is_string:
-#             engine.say(text)
-#             if engine.isBusy():
-#                 print("Currentrly speaking")
-#             else:
-#                 print("done speaking")
-#             engine.runAndWait()
-#             return
-#         else:
-#             file = ""
-#             with open(text, 'r') as lines:
-#                 file = lines.read().rstrip()
-#             if show_text:
-#                 print(file)
-#             engine.say(file)
-#             engine.runAndWait()
-#             return
-#     else:
-#         error = "No file_path given" if is_string else "No text string given"
-#         raise Exception(error)
 
 def textToSpeech(text: str, is_string: bool, voice: str, speed: int, show_text: bool):
     engine = pyttsx3.init()
@@ -106,12 +46,11 @@ def textToSpeech(text: str, is_string: bool, voice: str, speed: int, show_text: 
             # Set terminal to raw mode to read key presses
             old_settings = termios.tcgetattr(sys.stdin)
             tty.setcbreak(sys.stdin)
-            # Listen for key presses
             while True:
                 ch = sys.stdin.read(1)
                 if ch == 'q':
                     engine.stop()
-                    print("Text-to-speech engine stopped")
+                    print("SpeakEasy stopped")
                     break
         finally:
             # Restore terminal settings when finished
@@ -123,17 +62,8 @@ def textToSpeech(text: str, is_string: bool, voice: str, speed: int, show_text: 
         if show_text:
             print(to_read)
         engine.say(to_read)
-
-        # Create a new thread to listen for key presses while the engine is speaking
-        # The target parameter specifies the callable object to be invoked when the
-        # thread starts. In this case, the on_press function will be run in the new thread.
         t = threading.Thread(target=on_press)
-        # The daemon attribute is set to True for the new thread, which means that
-        # it will run in the background and won't prevent the Python interpreter
-        # from exiting when the main thread finishes.
         t.daemon = True
-        # the start() method is called on the new thread object, which starts the thread
-        # and runs the on_press function in the background.
         t.start()
         if engine.isBusy():
             print("Currentrly speaking")
@@ -143,3 +73,17 @@ def textToSpeech(text: str, is_string: bool, voice: str, speed: int, show_text: 
     else:
         error = "No file_path given" if is_string else "No text string given"
         raise Exception(error)
+
+
+# t = threading.Thread(target=on_press) :
+# Create a new thread to listen for key presses while the engine is speaking
+# The target parameter specifies the callable object to be invoked when the
+# thread starts. In this case, the on_press function will be run in the new thread.
+
+# t.daemon = True :
+# The daemon attribute is set to True for the new thread, which means that
+# it will run in the background and won't prevent the Python interpreter
+# from exiting when the main thread finishes.
+
+# t.start() :
+# the start() method is called on the new thread object

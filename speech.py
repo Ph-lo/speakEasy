@@ -58,6 +58,7 @@ with sr.Microphone() as source:
     audio = r.listen(source)
 
 # text = r.recognize_sphinx(audio)
-text = r.recognize_sphinx(audio, language="fr-FR")
+# text = r.recognize_google(audio, language="fr-FR")
+text = r.recognize_sphinx(audio)
 
 print("This is what I understood.. : {}".format(text))
