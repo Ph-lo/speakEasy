@@ -3,6 +3,7 @@ import sys
 import termios
 import tty
 import threading
+import curses
 
 voices = {
     "fr": "com.apple.voice.compact.fr-FR.Thomas",
@@ -36,7 +37,7 @@ voices = {
 }
 
 
-def textToSpeech(text: str, is_string: bool, voice: str, speed: int, show_text: bool):
+def textToSpeech(text: str, is_string: bool, voice: str, speed: int, show_text: bool, listen: bool, clear: bool):
     engine = pyttsx3.init()
     engine.setProperty('voice', voices[voice])
     engine.setProperty('rate', speed)
@@ -46,12 +47,28 @@ def textToSpeech(text: str, is_string: bool, voice: str, speed: int, show_text: 
             # Set terminal to raw mode to read key presses
             old_settings = termios.tcgetattr(sys.stdin)
             tty.setcbreak(sys.stdin)
+            print("Press 'q' to stop.")
             while True:
                 ch = sys.stdin.read(1)
                 if ch == 'q':
                     engine.stop()
-                    print("SpeakEasy stopped")
+                    if not clear:
+                        print("SpeakEasy stopped")
                     break
+        except termios.error as e:
+            # if the termios operation fails, fall back to a simpler method
+            print("Failed to read input with termios:", e)
+            while True:
+                try:
+                    # read keypress using curses
+                    ch = chr(curses.inch())
+                    if ch == 'q':
+                        engine.stop()
+                        if not clear:
+                            print("SpeakEasy stopped")
+                        break
+                except:
+                    pass
         finally:
             # Restore terminal settings when finished
             termios.tcsetattr(sys.stdin, termios.TCSADRAIN, old_settings)
@@ -62,13 +79,17 @@ def textToSpeech(text: str, is_string: bool, voice: str, speed: int, show_text: 
         if show_text:
             print(to_read)
         engine.say(to_read)
-        t = threading.Thread(target=on_press)
-        t.daemon = True
-        t.start()
         if engine.isBusy():
-            print("Currentrly speaking")
+            if not clear:
+                print("Currentrly speaking")
+        if listen:
+
+            t = threading.Thread(target=on_press)
+            t.daemon = True
+            t.start()
         engine.runAndWait()
-        print("Done speaking")
+        if not clear:
+            print("Done speaking")
         return
     else:
         error = "No file_path given" if is_string else "No text string given"

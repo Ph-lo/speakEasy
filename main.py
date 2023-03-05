@@ -10,7 +10,10 @@ def speech(args):
     voice = args.voice or "gb"
     speed = args.speed or 160
     show_text = args.echo
-    toSpeech.textToSpeech(text, is_file, voice, speed, show_text)
+    listen = args.listen
+    clear = args.clear
+    toSpeech.textToSpeech(text, is_file, voice, speed,
+                          show_text, listen, clear)
 
 
 def main():
@@ -18,11 +21,15 @@ def main():
         if not len(sys.argv) > 1:
             raise Exception("Arguments missing, no arguments were passed")
         parser = argparse.ArgumentParser(
-            description='🛠️ Description to come here 🛠️', formatter_class=argparse.RawTextHelpFormatter)
+            description='📢 Text to speech CLI tool', formatter_class=argparse.RawTextHelpFormatter)
         parser.add_argument(
             'text', type=str, help='file path or text string to transform as speech')
         parser.add_argument(
             '-f', '--file', action='store_false', help='to pass a text string as argument')
+        parser.add_argument(
+            '-c', '--clear', action='store_true', help='set flag to have no output, won\'t impact [-e]')
+        parser.add_argument(
+            '-l', '--listen', action='store_true', help='to make the script listen for inputs, when listening press "q" to stop')
         parser.add_argument(
             '-s', '--speed', metavar='', type=int, help='set the reading speed. (the number of words per minute)')
         parser.add_argument(
