@@ -5,7 +5,7 @@ Text-to-speech CLI tool
 - [usage](#usage)
 - [arguments](#arguments)
 - [options](#options)
-- [voice list](#-voice-list)
+- [voice list](#%EF%B8%8F-voice-list)
 - [some examples](#examples)
 
 ## Usage
@@ -29,10 +29,12 @@ main.py [text]    # file path or text string to transform into speech
 Available options:
 ```bash
 -h, --help           # show this help message and exit
+-c, --clear          # set flag to have no output, won't impact [-e, --echo]
 -e, --echo           # echo the text content of the given file
 -f, --file           # to pass a text string as argument
+-l, --listen         # to make the script listen for inputs, when listening press "q" to stop
 -s , --speed [INT]   # set the reading speed. (the number of words per minute)
--v , --voice [VOICE] # voice selection. [see list](#list)
+-v , --voice [VOICE] # voice selection. [see list](#%EF%B8%8F-voice-list)
 ```
 
 ## 🗣️ Voice list
@@ -61,5 +63,6 @@ main.py 'Hello world!' -v robot
 # Giving a file path
 main.py -f file.txt -v robot -s 50
 ```
+
 
 [table of contents](#table-of-contents)
