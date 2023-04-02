@@ -3,10 +3,19 @@ Text-to-speech CLI tool
 
 #### Table of contents
 - [usage](#usage)
+- [requirements](#requirements)
 - [arguments](#arguments)
 - [options](#options)
 - [voice list](#%EF%B8%8F-voice-list)
 - [some examples](#examples)
+
+## Requirements
+
+#### On Linux
+```bash
+apt-get install python3-pyaudio
+apt-get install espeak -y
+```
 
 ## Usage
 
